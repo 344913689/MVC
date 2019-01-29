@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据测试</title>
+    <script src="./static/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="./static/js/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="div1">
+        <ul v-for="(data, index) in datas">
+            <li><img v-bind:src="'../' + data.cat_logo" >&nbsp;&nbsp;{{ data.cat_name }}<br/>{{ data.cat_desc }}</li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+let log = console.log.bind(console)
+let vm = new Vue({
+    el: '#div1',
+    data: {
+        datas: '',
+    },
+    beforeCreate:function(){
+        let vm = this
+        $.ajax({
+            type: "get",
+            url : 'http://localhost:8000/php/MVC/index.php?m=admin&c=Category&a=indexAction',
+            dataType: "json",
+            success: function(result){
+                vm.datas = result.data
+            }
+        })
+    }
+})
+
+</script>
+</html>

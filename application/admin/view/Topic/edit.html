@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>话题——添加</title>
+</head>
+<body>
+    <h1>编辑话题</h1>
+    <form method="POST" action="?m=admin&c=Category&a=updateAction" enctype="multipart/form-data">        
+        分类名称：<input type="text" name="cat_name" id="cat_name" value="<{$cat_list.cat_name}>"><br/> 
+        分类描述：<input type="text" name="cat_desc" id="cat_desc" value="<{$cat_list.cat_desc}>"><br/>
+        <{if isset($cat_list.cat_logo)}>
+        <img alt="" src="<{$cat_list.cat_logo}>" style="max-width:50px; max-height:50px;">
+        <font color="red">图标已存在，再次上传将覆盖！</font><br/>
+        分类图标：<input type="file" name="cat_logo" id="cat_logo"><br/>
+        <{else}>
+        分类图标：<input type="file" name="cat_logo" id="cat_logo"><br/>
+        <{/if}>
+        父级分类：<select name="parent_id" id="parent_id">
+                {switch name="<{$parent_list.cat_id}>" }
+                    {case value="<{$parent_list.cat_id}>" break="0"}<option value="<{$parent_list.cat_id}>" /><{$parent_list.cat_name}></option><br/>{/case}
+                {/switch}
+                </select><br/>
+        <input type="hidden" name="cat_id" value="<{$cat_list.cat_id}>">
+        <input type="hidden" name="old_cat_logo" value="<{$cat_list.cat_logo}>" >
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

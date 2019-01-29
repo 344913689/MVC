@@ -1,0 +1,64 @@
+<!DOCTYPE html style="font-size:165px">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>smarty 模板</title>
+    <style type="text/css">
+        .clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+        .clearfloat{zoom:1}
+    </style>
+    <script>
+        window.DOMContentLoaded = function() {
+            function fixRem() {
+                var windowWidth = document.documentElement.clientWidth || window.innerWidth || document.body.clientWidth
+                // windowWidth = windowWidth > 750 ? 750 : windowWidth
+                var rootSize = 100 * (windowWidth / 375)
+                var htmlNode = document.getElementsByTagName("html")[0]
+                htmlNode.style.fontSize = rootSize + 'px'
+            }
+            fixRem()
+            window.addEventListener('resize', fixRem, false)
+        }
+    </script>
+    <script src="<{PUBLIC_PATH}>static/js/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+    <h1>分类列表</h1>
+    <input type="submit" value="添加" id="tijiao" onclick="javascript:add()" />
+    <div class="clearfloat">
+        <{if empty($datas.message)}>
+            <{foreach $datas as $data}>
+            <div style="float:left; margin: 1rem;">
+                <img src="<{$data.cat_logo}>" alt="<{$data.cat_name}>"/>
+                <{$data.cat_name}><br/>
+                <P><{$data.cat_desc}></P> 
+                <input type="submit" value="修改" id="xiugai" onclick="javascript:edit(<{$data.cat_id}>)" />
+                <input type="submit" value="删除" id="shanchu" onclick="javascript:del(<{$data.cat_id}>)" />
+            </div>
+            <{/foreach}>
+        <{else}>
+            <{$datas.message}><br/>
+        <{/if}>
+    </div>
+    <hr><br/>
+
+</body>
+<script type="text/javascript">
+    add = function () {
+        window.location.href = "?m=admin&c=category&a=addAction"
+    }
+    edit = function (id) {
+        window.location.href ="?m=admin&c=category&a=editAction&id="+id
+        //$.get(url = "?m=admin&c=category&a=editAction&id="+id)
+    }
+    del = function (id) {
+        if(confirm("删除后无法恢复，你确认要删除！")){
+            window.location.href ="?m=admin&c=category&a=deleteAction&id="+id
+        } else {
+            return false;
+        }
+    }
+</script>
+</html>
